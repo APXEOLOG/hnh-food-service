@@ -1,0 +1,17 @@
+{
+  "name": "hnh-food-lambdas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "APXEOLOG",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "13.7.6",
+    "@types/aws-lambda": "8.10.44",
+    "typescript": "3.8.2",
+    "aws-sdk": "2.585.0"
+  }
+}
