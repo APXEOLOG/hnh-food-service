@@ -1,0 +1,17 @@
+.terraform
+deploy
+.idea
+
+frontend/.idea
+frontend/node_modules
+frontend/dist
+frontend/package-lock.json
+frontend/public/data
+
+lambdas/dist
+lambdas/node_modules
+lambdas/package-lock.json
+
+*.tfvars
+*.tfstate
+*.tfstate.backup
