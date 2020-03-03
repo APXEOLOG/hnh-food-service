@@ -52,12 +52,12 @@ resource "aws_dynamodb_table" "main" {
   billing_mode = "PROVISIONED"
   read_capacity = 25
   write_capacity = 25
-  hash_key = "hash"
+  hash_key = "hashKey"
   stream_enabled = true
   stream_view_type = "NEW_IMAGE"
 
   attribute {
-    name = "hash"
+    name = "hashKey"
     type = "S"
   }
 
@@ -88,7 +88,7 @@ data "aws_iam_policy_document" "policy" {
     effect = "Allow"
 
     actions = [
-      "dynamodb:BatchWriteItem",
+      "dynamodb:PutItem",
       "dynamodb:GetRecords",
       "dynamodb:GetShardIterator",
       "dynamodb:DescribeStream",
