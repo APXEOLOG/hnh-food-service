@@ -25,7 +25,11 @@
             };
         },
         mounted: function () {
-            this.$http.get('./data/food-info.json').then((response) => {
+            this.$http.get('./data/food-info.json', {
+                headers: {
+                    'Cache-Control': 'no-cache'
+                }
+            }).then((response) => {
                 this.items = response.data;
                 this.loading = false;
             });
@@ -34,4 +38,5 @@
 </script>
 
 <style>
+
 </style>
