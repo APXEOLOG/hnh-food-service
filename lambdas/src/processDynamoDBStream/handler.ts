@@ -1,6 +1,6 @@
 import { DynamoDBStreamEvent } from 'aws-lambda';
 import * as AWS from 'aws-sdk';
-import { FoodInfoDB } from '../types/model';
+import { FoodInfoDB, MinifiedFoodInfo } from '../types/model';
 
 const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME || 'hnh-food';
 const s3 = new AWS.S3();
@@ -21,7 +21,7 @@ export async function handler(event: DynamoDBStreamEvent): Promise<void> {
     return;
   }
 
-  let data: { [hash: string]: FoodInfoDB } = {};
+  let data: { [hashKey: string]: MinifiedFoodInfo } = {};
 
   try {
     const s3Item = await s3.getObject({
@@ -35,8 +35,22 @@ export async function handler(event: DynamoDBStreamEvent): Promise<void> {
   } catch (e) {
   }
 
-  toUpdate.forEach(it => data[it.hash] = it);
+  toUpdate.forEach(it => data[it.hashKey] = {
+    t: it.itemName,
+    r: it.resourceName,
+    e: it.energy,
+    h: it.hunger,
+    i: it.ingredients?.map(ingredient => ({
+      n: ingredient.name,
+      v: ingredient.percentage,
+    })) ?? [],
+    f: it.feps?.map(fep => ({
+      n: fep.name,
+      v: fep.value,
+    })) ?? [],
+  });
 
+  // Write info file
   await s3.putObject({
     Bucket: S3_BUCKET_NAME,
     Key: 'data/food-info.json',

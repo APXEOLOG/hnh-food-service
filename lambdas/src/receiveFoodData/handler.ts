@@ -15,12 +15,12 @@ export async function handler(items: FoodInfo[]): Promise<ApiResult> {
 
     let dbEntities: FoodInfoDB[] = items.map(it => ({
       ...it,
-      hash: calculateHash(it),
+      hashKey: calculateHash(it),
     }));
 
     // Ensure no duplicates
-    const map: { [hash: string]: FoodInfoDB } = { };
-    dbEntities.forEach(it => map[it.hash] = it);
+    const map: { [hashKey: string]: FoodInfoDB } = { };
+    dbEntities.forEach(it => map[it.hashKey] = it);
     dbEntities = Object.values(map);
 
     // Split per 25 entries (max for BatchWrite)
@@ -28,20 +28,19 @@ export async function handler(items: FoodInfo[]): Promise<ApiResult> {
 
     for (let i = 0; i < batches.length; i++) {
       try {
-        const response = await CLIENT.batchWrite({
-          RequestItems: {
-            [DYNAMODB_TABLE_NAME]: dbEntities.map(it => ({
-              PutRequest: {
-                Item: it,
-              },
-            })),
-          },
-        }).promise();
-
-        const unprocessedItems = Object.keys(response.UnprocessedItems);
-        if (unprocessedItems.length > 0) {
-          console.error(`Got ${unprocessedItems.length} unprocessed items left`);
-        }
+        const promises: Promise<unknown>[] = batches[i].map(it => {
+          try {
+            return CLIENT.put({
+              Item: it,
+              TableName: DYNAMODB_TABLE_NAME,
+              ConditionExpression: 'attribute_not_exists(hashKey)'
+            }).promise();
+          } catch (e) {
+            // ConditionalCheckFailedException
+            return Promise.resolve();
+          }
+        });
+        await Promise.all(promises);
       } catch (e) {
         console.error('Cannot insert data into DDB', e);
       }

@@ -14,8 +14,23 @@ export interface FoodInfo {
     }[];
 }
 
+export interface MinifiedFoodInfo {
+    t: string; // title
+    r: string; // resource
+    e: number; // energy
+    h: number; // hunger
+    i: { // ingredients
+        n: string; // name
+        v: number; // value
+    }[];
+    f: { // feps
+        n: string; // name
+        v: number; // value
+    }[];
+}
+
 export interface FoodInfoDB extends FoodInfo {
-    hash: string;
+    hashKey: string;
 }
 
 export interface ApiResult {
