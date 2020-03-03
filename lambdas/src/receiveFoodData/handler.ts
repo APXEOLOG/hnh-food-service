@@ -23,21 +23,21 @@ export async function handler(items: FoodInfo[]): Promise<ApiResult> {
     dbEntities.forEach(it => map[it.hashKey] = it);
     dbEntities = Object.values(map);
 
-    // Split per 25 entries (max for BatchWrite)
+    // Split per 25 entries
     const batches = batchify(dbEntities, 25);
 
     for (let i = 0; i < batches.length; i++) {
       try {
-        const promises: Promise<unknown>[] = batches[i].map(it => {
+        const promises: Promise<unknown>[] = batches[i].map(async it => {
           try {
-            return CLIENT.put({
+            return await CLIENT.put({
               Item: it,
               TableName: DYNAMODB_TABLE_NAME,
               ConditionExpression: 'attribute_not_exists(hashKey)'
             }).promise();
           } catch (e) {
             // ConditionalCheckFailedException
-            return Promise.resolve();
+            return;
           }
         });
         await Promise.all(promises);
