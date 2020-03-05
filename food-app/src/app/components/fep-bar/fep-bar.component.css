@@ -1,0 +1,25 @@
+.fep-box {
+  text-align: center;
+  padding: 3px;
+  min-width: 40px;
+}
+
+.str1 {background-color: #BF9794; }
+.agi1 {background-color: #9995B8; }
+.int1 {background-color: #9DB7B9; }
+.con1 {background-color: #C29AB4; }
+.prc1 {background-color: #E4BF98; }
+.cha1 {background-color: #9BEEB1; }
+.dex1 {background-color: #FEFDCC; }
+.wil1 {background-color: #E4F38F; }
+.psy1 {background-color: #C48DFD; }
+
+.str2 {background-color: #DF958F; }
+.agi2 {background-color: #9991DC; }
+.int2 {background-color: #97D6DC; }
+.con2 {background-color: #E193C5; }
+.prc2 {background-color: #F2C28D; }
+.cha2 {background-color: #8EF7AA; }
+.dex2 {background-color: #FFFEA6; }
+.wil2 {background-color: #EEFF9E; }
+.psy2 {background-color: #C286FE; }

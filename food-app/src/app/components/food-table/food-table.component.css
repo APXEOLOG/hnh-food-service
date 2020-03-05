@@ -1,0 +1,77 @@
+
+.table {
+  width: 100%;
+}
+
+.col-name {
+  width: 25%;
+}
+
+.row-name img {
+  vertical-align: middle;
+  padding-right: 5px;
+}
+
+.col-fep {
+  width: 25%;
+}
+
+.row-fep {
+
+}
+
+.col-ingredient {
+  width: 20%;
+}
+
+.row-ingredient {
+
+}
+
+.col-hunger {
+  width: 5%;
+}
+
+.row-hunger {
+
+}
+
+.col-energy {
+  width: 5%;
+}
+
+.row-energy {
+
+}
+
+.col-totalfep {
+  width: 5%;
+}
+
+.row-totalfep {
+
+}
+
+.col-fepvshung {
+  width: 5%;
+}
+
+.row-fepvshung {
+
+}
+
+.filter {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.filter mat-form-field {
+   width: 50%;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 30px;
+}

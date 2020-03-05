@@ -1,0 +1,6 @@
+<div class="content" role="main">
+  <mat-spinner *ngIf="!foodData; else table"></mat-spinner>
+  <ng-template #table>
+    <food-table [foodData]="foodData"></food-table>
+  </ng-template>
+</div>

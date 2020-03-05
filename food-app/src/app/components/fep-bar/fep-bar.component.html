@@ -1,0 +1,10 @@
+<div>
+  <table>
+    <tr>
+      <td *ngFor="let fep of feps" class="fep-box" [className]="calculateClass(fep)">
+        <div class="fep-value">{{ fep.value }}</div>
+        <div class="fep-type">{{ fep.type }}+{{ fep.amount }}</div>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,17 @@
+<div>
+  <p>This search support <a href="https://www.lucenetutorial.com/lucene-query-syntax.html">lucene</a>-like queries</p>
+  Available terms:
+  <ul>
+    <li><code>name</code> - find with food name containing value (case-insensitive). For example: <code>name:roast</code></li>
+    <li><code>from</code> - find with ingredient containing value (case-insensitive). For example: <code>from:laurel</code></li>
+    <li>Fep-based terms (<code>str</code>, <code>cha2</code>, <code>prc1</code>, ...)
+      - find with specific fep value. You can use operators <code>></code>, <code><</code>, <code>>=</code>, <code><=</code>. For example: <code>str2:>0</code></li>
+    <li>Search negation - you can filter-out some items using term starting with <code>-</code>. For example: <code>-name:spit</code></li>
+    <li>Available fep codes are: <code *ngFor="let fep of feps">{{ fep }}</code></li>
+  </ul>
+  Some examples:<br>
+  <code>name:roast str:>0 int:>0 -wil:>0</code> - Find any food with "roast" in the name, with any STR feps > 0, any INT feps > 0 and no WIL feps<br>
+  <code>from:milk agi2:>0</code> - Find any food made from milk with AGI+2 feps<br>
+  <code>name:roast -name:spit prc2:>0</code> - Find any roasted, but not spitroasted food with PRC+2 feps<br>
+  You can also use <code>OR</code> operators like in lucene. By default all terms are combined via <code>AND</code> operator
+</div>
