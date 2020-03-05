@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex flex-row">
-        <div class="fep-box" v-for="item in expanded" :key="item.code" v-bind:class="item.class">
+        <div class="fep-box" v-for="item in expanded" :key="item.code + '-' + item.num + '-' + item.value" v-bind:class="item.class">
             <div class="fep-value">{{ item.value }}</div>
             <div class="fep-type">{{ item.code }}+{{ item.num }}</div>
         </div>
