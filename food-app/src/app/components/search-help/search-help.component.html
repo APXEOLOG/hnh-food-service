@@ -7,6 +7,7 @@
     <li>Fep-based terms (<code>str</code>, <code>cha2</code>, <code>prc1</code>, ...)
       - find with specific fep value. You can use operators <code>></code>, <code><</code>, <code>>=</code>, <code><=</code>. For example: <code>str2:>0</code></li>
     <li>Search negation - you can filter-out some items using term starting with <code>-</code>. For example: <code>-name:spit</code></li>
+    <li>fep% - Search for the food with specific fep should be X% from total FEP's. For example: <code>prc:100%</code>, <code>int2:>25%</code></li>
     <li>Available fep codes are: <code *ngFor="let fep of feps">{{ fep }}</code></li>
   </ul>
   Some examples:<br>

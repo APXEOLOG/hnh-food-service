@@ -101,19 +101,46 @@ export class QueryService {
   }
 
   private fepBasedCondition(field: string, term: string): FilterFunction {
-    const operator = Operators.find(it => term.startsWith(it));
+    // Parse operator
+    let operator = Operators.find(it => term.startsWith(it));
     if (operator) {
-      const filterValue = parseFloat(term.slice(operator.length));
+      term = term.slice(operator.length);
+    } else {
+      operator = '>=';
+    }
+
+    // Parse %-type
+    let percentOfTotal = false;
+    if (term.endsWith('%')) {
+      term = term.substr(0, term.length - 1);
+      percentOfTotal = true;
+    }
+
+    let filterValue = parseFloat(term);
+
+    if (percentOfTotal) {
+      filterValue = filterValue / 100;
       switch (operator) {
-        case '>': return (data) => data.fepBreakdown[field] > filterValue;
-        case '>=': return (data) => data.fepBreakdown[field] >= filterValue;
-        case '<': return (data) => data.fepBreakdown[field] < filterValue;
-        case '<=': return (data) => data.fepBreakdown[field] <= filterValue;
+        case '>':
+          return (data) => data.fepBreakdown[field] > data.fepBreakdown.totalFEP * filterValue;
+        case '>=':
+          return (data) => data.fepBreakdown[field] >= data.fepBreakdown.totalFEP * filterValue;
+        case '<':
+          return (data) => data.fepBreakdown[field] < data.fepBreakdown.totalFEP * filterValue;
+        case '<=':
+          return (data) => data.fepBreakdown[field] <= data.fepBreakdown.totalFEP * filterValue;
       }
     } else {
-      // Default operator is >=
-      const filterValue = parseFloat(term);
-      return (data) => data.fepBreakdown[field] >= filterValue;
+      switch (operator) {
+        case '>':
+          return (data) => data.fepBreakdown[field] > filterValue;
+        case '>=':
+          return (data) => data.fepBreakdown[field] >= filterValue;
+        case '<':
+          return (data) => data.fepBreakdown[field] < filterValue;
+        case '<=':
+          return (data) => data.fepBreakdown[field] <= filterValue;
+      }
     }
   }
 
